@@ -1,14 +1,12 @@
 ﻿  <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Thêm mới sản phẩm
+    Thống kê doanh thu
 
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-    <li><a href="#">Sản phẩm</a></li>
-    <li><a ui-sref="products">Danh sách</a></li>
-    <li class="active">Thêm mới</li>
+    <li><a href="#">Thống kê doanh thu</a></li>
   </ol>
 </section>
 <!-- Main content -->
@@ -42,7 +40,15 @@
           </h3>
         </div>
         <div class="box-body">
-          
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="datetime" class="form-control" ng-model="fromDate" placeholder="Từ ngày" />
+                  <input type="datetime" class="form-control" ng-model="toDate" placeholder="Đến ngày" />
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" ng-click="search()">Dữ liệu</button>
+                  </span>
+              </div>
+          </div>
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -61,6 +67,7 @@
                 </td>
                 <td>
                   {{item.Benefit | number}}
+
                 </td>
               </tr>
             </tbody>

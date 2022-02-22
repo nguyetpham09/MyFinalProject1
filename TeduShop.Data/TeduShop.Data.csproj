@@ -68,6 +68,10 @@
     <Compile Include="Migrations\202112191042224_CreateDatabse.Designer.cs">
       <DependentUpon>202112191042224_CreateDatabse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202211529045_RevenuesStatisticSP.cs" />
+    <Compile Include="Migrations\202202211529045_RevenuesStatisticSP.Designer.cs">
+      <DependentUpon>202202211529045_RevenuesStatisticSP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
@@ -113,6 +117,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202112191042224_CreateDatabse.resx">
       <DependentUpon>202112191042224_CreateDatabse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202211529045_RevenuesStatisticSP.resx">
+      <DependentUpon>202202211529045_RevenuesStatisticSP.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

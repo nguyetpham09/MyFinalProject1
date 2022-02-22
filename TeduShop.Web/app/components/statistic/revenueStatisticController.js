@@ -13,8 +13,8 @@
             var config = {
                 param: {
                     //mm/dd/yyyy
-                    fromDate: '01/01/2016',
-                    toDate: '01/01/2017'
+                    fromDate: '01/01/2022',
+                    toDate: '01/10/2022'
                 }
             }
             apiService.get('api/statistic/getrevenue?fromDate=' + config.param.fromDate + "&toDate=" + config.param.toDate, null, function (response) {
