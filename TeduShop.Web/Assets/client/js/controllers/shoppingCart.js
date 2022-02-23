@@ -223,22 +223,6 @@
         });
     },
 
-    deleteAll: function () {
-        $.ajax({
-            url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province',
-            type: 'GET',
-            dataType: 'json',
-            headers: {
-                Token: '89ab5325-7280-11ec-ac64-422c37c6de1b'
-            },
-            success: function (response) {
-                if (response.status) {
-                    var province = response.data;
-                }
-            }
-        });
-    },
-
     createOrder: function () {
         var order = {
             CustomerName: $('#txtName').val(),
@@ -288,19 +272,19 @@
         });
         return total;
     },
-    //deleteAll: function () {
-    //    $.ajax({
-    //        url: '/ShoppingCart/DeleteAll',
-    //        type: 'POST',
-    //        dataType: 'json',
-    //        success: function (response) {
-    //            if (response.status) {
-    //                cart.loadData();
+    deleteAll: function () {
+        $.ajax({
+            url: '/ShoppingCart/DeleteAll',
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.status) {
+                    cart.loadData();
 
-    //            }
-    //        }
-    //    });
-    //},
+                }
+            }
+        });
+    },
 
     updateAll: function () {
         var cartList = [];

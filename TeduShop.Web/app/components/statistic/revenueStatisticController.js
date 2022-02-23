@@ -7,14 +7,23 @@
         $scope.tabledata = [];
         $scope.labels = [];
         $scope.series = ['Doanh số', 'Lợi nhuận'];
+        $scope.fromDate = '01/01/2022';
+        $scope.toDate = '01/10/2022';
+        $scope.search = search;
 
         $scope.chartdata = [];
+
+        function search() {
+            getStatistic();
+        }
+
         function getStatistic() {
+
             var config = {
                 param: {
                     //mm/dd/yyyy
-                    fromDate: '01/01/2022',
-                    toDate: '01/10/2022'
+                    fromDate: $scope.fromDate,
+                    toDate: $scope.toDate
                 }
             }
             apiService.get('api/statistic/getrevenue?fromDate=' + config.param.fromDate + "&toDate=" + config.param.toDate, null, function (response) {
