@@ -1,7 +1,9 @@
 ﻿var cart = {
+    
     init: function () {
         cart.loadData();
         cart.registerEvent();
+        rates = [];
     },
     registerEvent: function () {
         $('#frmPayment').validate({
@@ -99,6 +101,110 @@
                 $('.boxContent').hide();
             }
         });
+        $("#sltCity").on("change", function () {
+            var value = $(this).val();
+            $.ajax({
+                url: 'api/delivery_partner/districts/'+value,
+                type: 'GET',
+                dataType: 'json',
+                /*headers: {
+                    Token: '89ab5325-7280-11ec-ac64-422c37c6de1b'
+                },*/
+                success: function (response) {
+
+                        var districts = response;
+                    var html = "<option value ='---'>Quận/ Huyện</option>"
+                    for (var index in districts) {
+                            html += "<option value ='" + districts[index].id + "'>" + districts[index].name + "</option>";
+                        }
+                        $("#sltDistrict").html(html);
+                    
+                }
+            });
+        });
+        $("#sltDistrict").on("change", function () {
+            var value = $(this).val();
+            $.ajax({
+                url: 'api/delivery_partner/wards/'+value,
+                type: 'GET',
+                //dataType: 'json',
+                /*headers: {
+                    Token: '89ab5325-7280-11ec-ac64-422c37c6de1b'
+                },*/
+                success: function (response) {
+
+                        var districts = response;
+                    var html = "<option value ='---'>Xã/ Phường</option>"
+                        for (var index in districts) {
+                            html += "<option value ='" + districts[index].id + "'>" + districts[index].name + "</option>";
+                        }
+                    $("#sltWard").html(html);
+                    
+                }
+            });
+        });
+        $("#sltWard").on("change", function () {
+
+            var requestData = new Object();
+            requestData.address_to = new Object();
+            requestData.address_to.district = $("#sltDistrict").val();
+            requestData.address_to.city = $("#sltCity").val();
+            requestData.address_to.ward = $(this).val();
+            requestData.parcel = new Object();
+            requestData.parcel.weight = 300;
+
+            $.ajax({
+                url: 'api/delivery_partner/rates',
+                type: 'POST',
+                dataType: 'json',
+                data: requestData,
+                /*headers: {
+                    Token: '89ab5325-7280-11ec-ac64-422c37c6de1b'
+                },*/
+                success: function (response) {
+                    this.rates = response;
+                    var html = "";
+                    var rateLayout = "<tr id='{id}'> <td><img src='{carrier_logo}' style='width:50px;' class ='carrier_name'> {carrier_name}</td>";
+                    rateLayout += "<td class ='service'>{service}</td>";
+                    rateLayout += "<td class ='expected'>{expected}</td>";
+                    rateLayout += "<td class ='total_amount' value ='{total_amount_value}' >{total_amount}</td> ";
+                    rateLayout += "<td><input type = 'radio' value ='{id}' name='selectedService'></td> </tr>";
+
+
+                    for (var index in this.rates) {
+
+                        var rateItem = rateLayout.split("{carrier_logo}").join(this.rates[index].carrier_logo);
+                        rateItem = rateItem.split("{carrier_name}").join( this.rates[index].carrier_name);
+                        rateItem = rateItem.split("{service}").join(this.rates[index].service);
+                        rateItem = rateItem.split("{expected}").join(this.rates[index].expected);
+                        rateItem = rateItem.split("{total_amount}").join(this.rates[index].total_amount.toLocaleString());
+                        rateItem = rateItem.split("{total_amount_value}").join(this.rates[index].total_amount);
+                        rateItem = rateItem.split("{id}").join(index);
+                            html += rateItem;
+                        }
+                    $("#tblRate").html(html);
+
+                   // cart.initRadioEvent();
+                    $('input:radio[name="selectedService"]').change(
+                        function () {
+                            if ($(this).is(':checked')) {
+                                // append goes here
+                                var value = $(this).val();
+                                var total_amount = $("#" + value + " .total_amount").attr("value");
+                                var expected = $("#" + value + " .expected").text();
+                                $('#lblTotalOrder').text((cart.getTotalOrder() + parseInt(total_amount)).toLocaleString());
+                                $("#lblDelivery").text("Vận chuyển: " + parseInt(total_amount).toLocaleString() + " (" + expected + ")");
+                            }
+                        });
+                }
+            });
+        });
+
+        
+    },
+    
+    initRadioEvent: function() {
+        
     },
     getLoginUser: function () {
         $.ajax({

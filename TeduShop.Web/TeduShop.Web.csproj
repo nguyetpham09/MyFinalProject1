@@ -103,8 +103,8 @@
       <HintPath>..\packages\HtmlRenderer.PdfSharp.1.5.0.6\lib\net45\HtmlRenderer.PdfSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\Momo\payment\c#\MoMo\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -267,6 +267,8 @@
     <Compile Include="Api\ApplicationGroupController.cs" />
     <Compile Include="Api\ApplicationRoleController.cs" />
     <Compile Include="Api\ApplicationUserController.cs" />
+    <Compile Include="Api\DeliveryPartnerController.cs" />
+    <Compile Include="Api\GoShipDistrict.cs" />
     <Compile Include="Api\HomeController.cs" />
     <Compile Include="Api\OrderController.cs" />
     <Compile Include="Api\PostCategoryController.cs" />
@@ -298,7 +300,7 @@
     <Compile Include="Infrastructure\Core\ServiceFactory.cs" />
     <Compile Include="Infrastructure\Extensions\EntityExtensions.cs" />
     <Compile Include="Infrastructure\GoShipAPI\GoShip.cs" />
-    <Compile Include="Infrastructure\GoShipAPI\GoShipCity.cs" />
+    <Compile Include="Infrastructure\GoShipAPI\GoShipModel.cs" />
     <Compile Include="Infrastructure\GoShipAPI\GoShipParam.cs" />
     <Compile Include="Infrastructure\MomoSecurity\MomoSecurity.cs" />
     <Compile Include="Infrastructure\MomoSecurity\PaymentRequest.cs" />
@@ -5138,6 +5140,7 @@
     <Folder Include="Reports\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\About\" />
+    <Folder Include="Views\DeliveryPartner\" />
     <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>

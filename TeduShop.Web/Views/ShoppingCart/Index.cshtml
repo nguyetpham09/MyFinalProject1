@@ -27,7 +27,9 @@
             <button class="btn btn-danger" id="btnDeleteAll">Xóa giỏ hàng</button>
             <button class="btn btn" id="btnCheckout">Thanh toán</button>
             <div class="pull-right">
+                <div id="lblDelivery"></div>
                 Tổng tiền: <span id="lblTotalOrder"></span>
+
             </div>
         </div>
         <div id="divCheckout" style="display:none;">
@@ -43,16 +45,42 @@
                                     Sử dụng thông tin đăng nhập
                                 </label>
                             }
+                        <div class="d-flex-row">
                             <input type="text" class="textbox" id="txtName" name="name" placeholder="Họ tên">
                             @{
                                 var listCity = (IEnumerable<TeduShop.Web.Infrastructure.GoShipAPI.GoShipCity>)ViewBag.ListCity;
                             }
-                            <select id="txtAddress"> Tỉnh/ Thành phố
-                                @foreach(var city in listCity)
-                                    {
-                                        <option value="@city.id">@city.name</option>
-                                    }
+                            <select id="sltCity" class="form-control">
+                                <option>Tỉnh/ Thành phố </option>
+                                @foreach (var city in listCity)
+                                {
+                                    <option value="@city.id">@city.name</option>
+                                }
                             </select>
+                            <select id="sltDistrict" class="form-control">
+
+                                <option>Quận/ Huyện</option>
+
+                            </select>
+                            <select id="sltWard" class="form-control">
+
+                                <option>Xã/ Phường</option>
+                            </select>
+                            <input type="text" class="textbox" id="txtAddress" name="address" placeholder="Địa chỉ nhà">
+                        </div>
+                                <table class="table table-striped">
+                                <thead>
+                                    <th>Hãng vận chuyển</th>
+                                    <th>Tên dịch vụ</th>
+                                    <th>Thời gian</th>
+                                    <th>Chi phí</th>
+                                    <th>Chọn</th>
+                                </thead>
+                                    <tbody id="tblRate">
+                                    </tbody>
+
+                                </table>
+
                             <input type="text" class="textbox" id="txtEmail" name="email" placeholder="Email">
                             <input type="text" class="textbox" id="txtPhone" name="phone" placeholder="Điện thoại">
                             <p><b>PHƯƠNG THỨC THANH TOÁN</b></p>
