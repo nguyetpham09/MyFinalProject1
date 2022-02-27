@@ -179,9 +179,9 @@ namespace TeduShop.Web.Controllers
                 {
                     
                     string orderInfo = "Thanh toán đon hàng tại LovebookShop";
-                    
-                    
-                    string amount = orderDetails.Sum(x => x.Quantity * x.Price).ToString().Split('.').First();
+
+
+                    string amount = orderNew.Total.ToString();//orderDetails.Sum(x => x.Quantity * x.Price).ToString().Split('.').First();
                     string orderId = orderReturn.ID.ToString();//Guid.NewGuid().ToString();
                     string requestId = Guid.NewGuid().ToString();
                     string extraData = "";
