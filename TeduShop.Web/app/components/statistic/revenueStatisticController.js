@@ -18,12 +18,28 @@
         }
 
         function getStatistic() {
+            var from, to;
+            if (typeof $scope.fromDate === 'string' || $scope.fromDate instanceof String) {
+                from = $scope.fromDate;
+            }
+            // it's a string
+            else {
+                from = $scope.fromDate?.toLocaleDateString('en-us');
+            }
+
+            if (typeof $scope.toDate === 'string' || $scope.toDate instanceof String) {
+                to = $scope.toDate;
+            }
+            // it's a string
+            else {
+                to = $scope.toDate?.toLocaleDateString('en-us');
+            }
 
             var config = {
                 param: {
                     //mm/dd/yyyy
-                    fromDate: $scope.fromDate,
-                    toDate: $scope.toDate
+                    fromDate: from,
+                    toDate: to
                 }
             }
             apiService.get('api/statistic/getrevenue?fromDate=' + config.param.fromDate + "&toDate=" + config.param.toDate, null, function (response) {
