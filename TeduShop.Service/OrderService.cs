@@ -11,6 +11,7 @@ namespace TeduShop.Service
         
         Order Create(ref Order order, List<OrderDetail> orderDetails);
         void UpdateStatus(int orderId);
+        void UpdateShipmentId(int orderId, string shipmentId);
         void Save();
         IEnumerable<OrderInformation> GetAllOrderInformation();
         IEnumerable<OrderInformation> GetAllOrderInformationByOrderId(int? orderId);
@@ -54,8 +55,15 @@ namespace TeduShop.Service
             var order = _orderRepository.GetSingleById(orderId);
             order.Status = true;
             _orderRepository.Update(order);
+            _unitOfWork.Commit();
         }
-
+        public void UpdateShipmentId(int orderId, string shipmentId)
+        {
+            var order = _orderRepository.GetSingleById(orderId);
+            order.ShipmentId = shipmentId;
+            _orderRepository.Update(order);
+            _unitOfWork.Commit();
+        }
         public void Save()
         {
             _unitOfWork.Commit();

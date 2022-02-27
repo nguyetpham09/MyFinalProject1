@@ -94,7 +94,7 @@ namespace TeduShop.Web.Controllers
         public ActionResult CreateOrder(string orderViewModel)
         {
             var order = new JavaScriptSerializer().Deserialize<OrderViewModel>(orderViewModel);
-
+  
             var orderNew = new Order();
 
             orderNew.UpdateOrder(order);
@@ -125,6 +125,51 @@ namespace TeduShop.Web.Controllers
 
                 if (order.PaymentMethod == "CASH")
                 {
+                    //create shipment 
+                    GoShip goship = new GoShip();
+                    HttpClient client = new HttpClient();
+                    Shipment shipment = new Shipment();
+                    shipment.order_id = orderReturn.ID.ToString();
+                    shipment.rate = orderNew.RateId;
+                    shipment.address_to = new Shipment.Address();
+                    shipment.address_to.district = orderNew.CustomerAddressDistrict;
+                    shipment.address_to.city = orderNew.CustomerAddressCity;
+                    shipment.address_to.ward = orderNew.CustomerAddressWard;
+                    shipment.address_to.street = orderNew.CustomerAddress;
+                    shipment.address_to.phone = orderNew.CustomerMobile;
+                    shipment.address_to.name = orderNew.CustomerName;
+
+                    shipment.address_from = new Shipment.Address();
+                    shipment.address_from.district = ConfigHelper.GetByKey("ShopDistrict");
+                    shipment.address_from.city = ConfigHelper.GetByKey("ShopCity");
+                    shipment.address_from.ward = ConfigHelper.GetByKey("ShopWard");
+                    shipment.address_from.street = ConfigHelper.GetByKey("ShopStreet");
+                    shipment.address_from.phone = ConfigHelper.GetByKey("ShopPhone");
+                    shipment.address_from.name = ConfigHelper.GetByKey("ShopName");
+
+                    shipment.parcel = new Shipment.Parcel();
+                    shipment.parcel.weight = orderNew.Weight;
+                    shipment.parcel.cod = orderNew.OrderAmount;
+
+                    HttpResponseMessage result = goship.Shipment(client, shipment);
+                    var sData = result.Content.ReadAsStringAsync().Result;
+                    dynamic goshipResponse = JsonConvert.DeserializeObject(sData);
+                    //var data = goshipResponse.data;//
+                    //CreateShipmentReturn responseData = JsonConvert.DeserializeObject<CreateShipmentReturn>(myString);
+
+                    //update shipment id to order 
+                    if (goshipResponse.status.Value == "success")
+                    {
+                        _orderService.UpdateShipmentId(int.Parse(shipment.order_id), goshipResponse.id.Value);
+                    }
+                    else
+                    {
+                        return Json(new
+                        {
+                            status = false,
+                            message = "Tạo vận đơn thất bại"
+                        });
+                    }
                     return Json(new
                     {
                         status = true
@@ -137,7 +182,7 @@ namespace TeduShop.Web.Controllers
                     
                     
                     string amount = orderDetails.Sum(x => x.Quantity * x.Price).ToString().Split('.').First();
-                    string orderId = Guid.NewGuid().ToString();
+                    string orderId = orderReturn.ID.ToString();//Guid.NewGuid().ToString();
                     string requestId = Guid.NewGuid().ToString();
                     string extraData = "";
                     string requestType = "captureWallet";
@@ -329,6 +374,47 @@ namespace TeduShop.Web.Controllers
             else
             {
                 ViewBag.message = "Thanh toán thành công";
+                //create SHipment 
+                GoShip goship = new GoShip();
+                HttpClient client = new HttpClient();
+                Shipment shipment = new Shipment();
+                shipment.order_id = Request["orderId"];
+                OrderInformation orderInfo = _orderService.GetOrderInformationByOrderId(int.Parse(shipment.order_id));
+                shipment.rate = orderInfo.RateId;
+                shipment.address_to = new Shipment.Address();
+                shipment.address_to.district = orderInfo.CustomerAddressDistrict;
+                shipment.address_to.city = orderInfo.CustomerAddressCity;
+                shipment.address_to.ward = orderInfo.CustomerAddressWard;
+                shipment.address_to.street = orderInfo.CustomerAddress;
+                shipment.address_to.phone = orderInfo.CustomerPhoneNumber;
+                shipment.address_to.name = orderInfo.CustomerName;
+
+                shipment.address_from = new Shipment.Address();
+                shipment.address_from.district = ConfigHelper.GetByKey("ShopDistrict");
+                shipment.address_from.city = ConfigHelper.GetByKey("ShopCity");
+                shipment.address_from.ward = ConfigHelper.GetByKey("ShopWard");
+                shipment.address_from.street = ConfigHelper.GetByKey("ShopStreet");
+                shipment.address_from.phone = ConfigHelper.GetByKey("ShopPhone");
+                shipment.address_from.name = ConfigHelper.GetByKey("ShopName");
+
+                shipment.parcel = new Shipment.Parcel();
+                shipment.parcel.weight = orderInfo.Weight;
+
+                HttpResponseMessage result = goship.Shipment(client,shipment);
+                var sData = result.Content.ReadAsStringAsync().Result;
+                dynamic goshipResponse = JsonConvert.DeserializeObject(sData);
+                if (goshipResponse.status.Value == "success")
+                {
+                    _orderService.UpdateShipmentId(int.Parse(shipment.order_id), goshipResponse.id.Value);
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        status = false,
+                        message ="Tạo vận đơn thất bại"
+                    });
+                }
                 Session[CommonConstants.SessionCart] = new List<ShoppingCartViewModel>();
             }
 
