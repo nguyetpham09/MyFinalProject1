@@ -88,7 +88,7 @@ namespace TeduShop.Data.Repositories
         {
             var query = from p in DbContext.Products
                         join orderDetail in DbContext.OrderDetails
-                        on p.ID equals orderDetail.OrderID
+                        on p.ID equals orderDetail.ProductID
                         join order in DbContext.Orders
                         on orderDetail.OrderID equals order.ID
                         join customer in DbContext.Users
@@ -107,7 +107,15 @@ namespace TeduShop.Data.Repositories
                             ProductName = p.Name,
                             Quantity = orderDetail.Quantity,
                             Status = order.Status,
-                            CustomerId = order.CustomerId
+                            CustomerId = order.CustomerId,
+                            CustomerAddressCity = order.CustomerAddressCity,
+                            CustomerAddressDistrict = order.CustomerAddressDistrict,
+                            CustomerAddressWard = order.CustomerAddressWard,
+                            ShipmentId = order.ShipmentId,
+                            ShipmentStatus = order.ShipmentStatus,
+                            RateId = order.RateId,
+                            Weight = order.Weight
+
                         };
 
             return query.First();
@@ -139,7 +147,15 @@ namespace TeduShop.Data.Repositories
                 ProductName = x.p.Name,
                 Quantity = x.orderDetail.Quantity,
                 Status = x.order.Status,
-                CustomerId = x.order.CustomerId
+                CustomerId = x.order.CustomerId,
+                CustomerAddressCity = x.order.CustomerAddressCity,
+                CustomerAddressDistrict = x.order.CustomerAddressDistrict,
+                CustomerAddressWard = x.order.CustomerAddressWard,
+                ShipmentId = x.order.ShipmentId,
+                ShipmentStatus = x.order.ShipmentStatus,
+                RateId = x.order.RateId,
+                Weight = x.order.Weight
+
             });
 
             return result;

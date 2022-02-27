@@ -25,6 +25,8 @@ namespace TeduShop.Web.Infrastructure.GoShipAPI
 
     public class Shipment
     {
+        public string rate { get; set; }
+        public string order_id { get; set; }
         public Address address_from { get; set; }
         public Address address_to { get; set; }
         public Parcel parcel { get; set; }
@@ -34,6 +36,9 @@ namespace TeduShop.Web.Infrastructure.GoShipAPI
             public string district { get; set; }
             public string city { get; set; }
             public string ward { get; set; }
+            public string street { get; set; }
+            public string name { get; set; }
+            public string phone { get; set; }
         }
         public class Parcel
         {
@@ -64,5 +69,10 @@ namespace TeduShop.Web.Infrastructure.GoShipAPI
         public int total_amount { get; set; }
         //"expected_txt": ""
         public string expected_txt { get; set; }
+    }
+    public class CreateShipmentReturn {
+        public string id { get; set; }
+        //"carrier_name": "Vietnam Post",
+        public string status { get; set; }
     }
 }

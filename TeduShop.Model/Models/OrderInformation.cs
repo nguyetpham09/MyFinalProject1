@@ -20,5 +20,13 @@ namespace TeduShop.Model.Models
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string CustomerId { get; set; }
+
+        public string CustomerAddressDistrict { get; set; }
+        public string CustomerAddressCity { get; set; }
+        public string CustomerAddressWard { get; set; }
+        public int Weight { get; set; }
+        public string ShipmentId { get; set; }
+        public string ShipmentStatus { get; set; }
+        public string RateId { get; set; }
     }
 }

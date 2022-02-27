@@ -100,8 +100,11 @@
             else {
                 $('.boxContent').hide();
             }
+            $("#tblRate").html("");
+            $("#sltWard").val("---");
         });
         $("#sltCity").on("change", function () {
+            $("#tblRate").html("");
             var value = $(this).val();
             $.ajax({
                 url: 'api/delivery_partner/districts/'+value,
@@ -123,6 +126,8 @@
             });
         });
         $("#sltDistrict").on("change", function () {
+            $("#tblRate").html("");
+
             var value = $(this).val();
             $.ajax({
                 url: 'api/delivery_partner/wards/'+value,
@@ -144,7 +149,7 @@
             });
         });
         $("#sltWard").on("change", function () {
-
+            $("#tblRate").html("");
             var requestData = new Object();
             requestData.address_to = new Object();
             requestData.address_to.district = $("#sltDistrict").val();
@@ -152,6 +157,9 @@
             requestData.address_to.ward = $(this).val();
             requestData.parcel = new Object();
             requestData.parcel.weight = 300;
+            if ($('input[name="paymentMethod"]:checked').val() == 'CASH') {
+                requestData.parcel.cod = cart.getTotalOrder();
+            }
 
             $.ajax({
                 url: 'api/delivery_partner/rates',
@@ -164,11 +172,11 @@
                 success: function (response) {
                     this.rates = response;
                     var html = "";
-                    var rateLayout = "<tr id='{id}'> <td><img src='{carrier_logo}' style='width:50px;' class ='carrier_name'> {carrier_name}</td>";
+                    var rateLayout = "<tr id='{id}'> <td> {carrier_name}</td>";
                     rateLayout += "<td class ='service'>{service}</td>";
                     rateLayout += "<td class ='expected'>{expected}</td>";
-                    rateLayout += "<td class ='total_amount' value ='{total_amount_value}' >{total_amount}</td> ";
-                    rateLayout += "<td><input type = 'radio' value ='{id}' name='selectedService'></td> </tr>";
+                    rateLayout += "<td class ='total_amount cod_fee' value ='{total_amount_value}' cod_fee='{cod_fee}'>{total_amount}</td> ";
+                    rateLayout += "<td><input type = 'radio' value ='{id}' rate_id ='{rate_id}' name='selectedService'></td> </tr>";
 
 
                     for (var index in this.rates) {
@@ -179,6 +187,8 @@
                         rateItem = rateItem.split("{expected}").join(this.rates[index].expected);
                         rateItem = rateItem.split("{total_amount}").join(this.rates[index].total_amount.toLocaleString());
                         rateItem = rateItem.split("{total_amount_value}").join(this.rates[index].total_amount);
+                        rateItem = rateItem.split("{cod_fee}").join(this.rates[index].cod_fee);
+                        rateItem = rateItem.split("{rate_id}").join(this.rates[index].id);
                         rateItem = rateItem.split("{id}").join(index);
                             html += rateItem;
                         }
@@ -192,8 +202,14 @@
                                 var value = $(this).val();
                                 var total_amount = $("#" + value + " .total_amount").attr("value");
                                 var expected = $("#" + value + " .expected").text();
-                                $('#lblTotalOrder').text((cart.getTotalOrder() + parseInt(total_amount)).toLocaleString());
-                                $("#lblDelivery").text("Vận chuyển: " + parseInt(total_amount).toLocaleString() + " (" + expected + ")");
+                                var cod_fee = $("#" + value + " .cod_fee").attr("cod_fee");
+                                $('#lblTotalOrder').text(cart.getTotalOrder().toLocaleString());
+                                $('#lblTotalOrder').attr("value" , cart.getTotalOrder());
+                                $("#lblDelivery").text( expected );
+                                $("#lblCodFee").text(parseInt(cod_fee).toLocaleString());
+                                $('#lblCodFee').attr("value", cod_fee);
+                                $("#lblPaymentAmount").text((cart.getTotalOrder() + parseInt(total_amount)).toLocaleString());
+                                $("#lblPaymentAmount").attr("value", cart.getTotalOrder() + parseInt(total_amount));
                             }
                         });
                 }
@@ -224,6 +240,7 @@
     },
 
     createOrder: function () {
+
         var order = {
             CustomerName: $('#txtName').val(),
             CustomerAddress: $('#txtAddress').val(),
@@ -232,7 +249,19 @@
             CustomerMessage: $('#txtMessage').val(),
             PaymentMethod: $('input[name="paymentMethod"]:checked').val(),
             BankCode: $('input[groupname="bankcode"]:checked').prop('id'),
-            Status: false
+            Status: false,
+            CustomerAddressDistrict : $("#sltDistrict").val(),
+            CustomerAddressCity : $("#sltCity").val(),
+            CustomerAddressWard : $("#sltWard").val(),
+            Weight: 300,
+            OrderAmount : parseInt($('#lblTotalOrder').attr("value")),
+            CodFee: parseInt($('#lblCodFee').attr("value")),
+            Total: parseInt($("#lblPaymentAmount").attr("value")),
+            RateId: $('input:radio[name="selectedService"]:checked').attr("rate_id")
+        }
+        if (order.RateId == undefined || order.RateId == "") {
+            alert("Vui lòng chọn dịch vụ vận chuyển");
+            return;
         }
         $.ajax({
             url: '/ShoppingCart/CreateOrder',

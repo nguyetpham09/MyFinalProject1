@@ -40,6 +40,16 @@ namespace TeduShop.Model.Models
         public string PaymentStatus { set; get; }
         public bool Status { set; get; }
 
+        public string CustomerAddressDistrict { get; set; }
+        public string CustomerAddressCity { get; set; }
+        public string CustomerAddressWard { get; set; }
+        public int Weight { get; set; }
+        public string ShipmentId { get; set; }
+        public string ShipmentStatus { get; set; }
+        public string RateId { get; set; }
+        public int OrderAmount { get; set; }
+        public int CodFee { get; set; }
+        public int Total { get; set; }
         [StringLength(128)]
         [Column(TypeName = "nvarchar")]
         public string CustomerId { set; get; }

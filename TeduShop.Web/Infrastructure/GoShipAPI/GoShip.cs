@@ -17,6 +17,7 @@ namespace TeduShop.Web.Infrastructure.GoShipAPI
         private const string GET_DISTRICTS_PATH = "cities/{code}/districts";
         private const string GET_WARD_PATH = "districts/{code}/wards";
         private const string RATE_PATH = "rates";
+        private const string SHIPMENT_PATH = "shipments";
 
         private string UserName = ConfigHelper.GetByKey("UserName");
         private string Password = ConfigHelper.GetByKey("Password");
@@ -149,6 +150,13 @@ namespace TeduShop.Web.Infrastructure.GoShipAPI
             obj.Add("shipment", data);
             return Request(client, HttpMethod.Post, obj, RATE_PATH);
         }
+        public HttpResponseMessage Shipment(HttpClient client, Shipment data)
+        {
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+            obj.Add("shipment", data);
+            return Request(client, HttpMethod.Post, obj, SHIPMENT_PATH);
+        }
+
     }
 
 
