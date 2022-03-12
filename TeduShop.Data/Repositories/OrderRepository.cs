@@ -28,13 +28,13 @@ namespace TeduShop.Data.Repositories
         {
             var query = from p in DbContext.Products
                         join orderDetail in DbContext.OrderDetails
-                        on p.ID equals orderDetail.OrderID
+                        on p.ID equals orderDetail.ProductID
                         join order in DbContext.Orders
                         on orderDetail.OrderID equals order.ID
                         join customer in DbContext.Users
                         on order.CustomerId equals customer.Id
-                        select new { p, orderDetail, order, customer};
-            
+                        select new { p, orderDetail, order, customer };
+
             var result = query.Select(x => new OrderInformation() { 
                 OrderId = x.order.ID,
                 CreatedDate = x.order.CreatedDate,
