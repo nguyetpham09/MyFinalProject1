@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TeduShop.Model.Models
 {
@@ -23,8 +19,11 @@ namespace TeduShop.Model.Models
         public string CustomerId { get; set; }
 
         public string CustomerAddressDistrict { get; set; }
+        public string AddressDistrict { get; set; }
         public string CustomerAddressCity { get; set; }
+        public string AddressCity { get; set; }
         public string CustomerAddressWard { get; set; }
+        public string AddressWard { get; set; }
         public int Weight { get; set; }
         public string ShipmentId { get; set; }
         public string ShipmentStatus { get; set; }
