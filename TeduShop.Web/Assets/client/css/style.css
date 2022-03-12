@@ -1723,6 +1723,17 @@ img.banner-bag {
 	padding: 0 0 0 6.2em;
 }
 
+.product-title{
+	font-weight:bold;
+
+}
+	.product-card {
+		background-color: white;
+		display: inline-block;
+	}
+.total{
+	color:coral;
+}
 /*.content_box{
 	margin: 300px;
 }*/
