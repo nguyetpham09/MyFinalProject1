@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TeduShop.Data.Infrastructure;
 using TeduShop.Model.Models;
-using System.Linq;
 
 namespace TeduShop.Data.Repositories
-{ 
+{
     public interface IProductRepository : IRepository<Product>
     {
         IEnumerable<Product> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow);

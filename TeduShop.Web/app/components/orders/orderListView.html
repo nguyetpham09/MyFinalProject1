@@ -15,7 +15,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Sản phẩm</h3>
+            <h3 class="box-title">Đơn hàng</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -30,9 +30,6 @@
                             <button class="btn btn-default" type="button" ng-click="search()">Tìm kiếm</button>
                         </span>
                     </div><!-- /input-group -->
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-success" ui-sref="order_add">Thêm mới</button>
                 </div>
             </di>
             <div class="row">
@@ -67,6 +64,7 @@
                             <!--class="badge bg-red"-->
                             <td>
                                 <button class="btn btn-sm btn-primary" ui-sref="order_edit({id:item.OrderId})"><i class="fa fa-pencil"></i></button>
+                                <button class="btn  btn-sm btn-danger" ng-click="deleteOrder(item.OrderId)"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                         <tfoot>

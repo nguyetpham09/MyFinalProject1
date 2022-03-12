@@ -16,7 +16,7 @@
     <!-- Horizontal Form -->
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{order.OrderId}}</h3>
+            <h3 class="box-title">ĐƠN HÀNG {{order.OrderId}}</h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <form class="form-horizontal" novalidate name="frmUpdateOrder" role="form" ng-submit="UpdateOrder()">
@@ -45,7 +45,7 @@
                 </div>
             </div><!-- /.box-body -->
             <div class="box-footer">
-                <button ui-sref="products" class="btn btn-default">Hủy</button>
+                <button ui-sref="orders" class="btn btn-default">Hủy</button>
                 <button type="submit" ng-disabled="frmUpdateProduct.$invalid" class="btn btn-success pull-right">Lưu</button>
             </div><!-- /.box-footer -->
         </form>
