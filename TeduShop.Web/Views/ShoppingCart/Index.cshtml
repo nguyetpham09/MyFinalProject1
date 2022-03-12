@@ -59,7 +59,7 @@
                                     <option>Tỉnh/ Thành phố </option>
                                     @foreach (var city in listCity)
                                     {
-                                        <option value="@city.id">@city.name</option>
+                                        <option value="@city.id/@city.name">@city.name</option>
                                     }
                                 </select>
                                 <select id="sltDistrict" class="form-control" name="district">

@@ -105,7 +105,7 @@
         });
         $("#sltCity").on("change", function () {
             $("#tblRate").html("");
-            var value = $(this).val();
+            var value = $(this).val().split("/")[0];
             $.ajax({
                 url: 'api/delivery_partner/districts/'+value,
                 type: 'GET',
@@ -118,7 +118,7 @@
                         var districts = response;
                     var html = "<option value ='---'>Quận/ Huyện</option>"
                     for (var index in districts) {
-                            html += "<option value ='" + districts[index].id + "'>" + districts[index].name + "</option>";
+                        html += "<option value ='" + districts[index].id + "/" + districts[index].name + "'>" + districts[index].name + "</option>";
                         }
                         $("#sltDistrict").html(html);
                     
@@ -128,7 +128,7 @@
         $("#sltDistrict").on("change", function () {
             $("#tblRate").html("");
 
-            var value = $(this).val();
+            var value = $(this).val().split("/")[0];
             $.ajax({
                 url: 'api/delivery_partner/wards/'+value,
                 type: 'GET',
@@ -138,10 +138,10 @@
                 },*/
                 success: function (response) {
 
-                        var districts = response;
+                        var wards = response;
                     var html = "<option value ='---'>Xã/ Phường</option>"
-                        for (var index in districts) {
-                            html += "<option value ='" + districts[index].id + "'>" + districts[index].name + "</option>";
+                    for (var index in wards) {
+                        html += "<option value ='" + wards[index].id + "/" + wards[index].name + "'>" + wards[index].name + "</option>";
                         }
                     $("#sltWard").html(html);
                     
@@ -152,9 +152,9 @@
             $("#tblRate").html("");
             var requestData = new Object();
             requestData.address_to = new Object();
-            requestData.address_to.district = $("#sltDistrict").val();
-            requestData.address_to.city = $("#sltCity").val();
-            requestData.address_to.ward = $(this).val();
+            requestData.address_to.district = $("#sltDistrict").val().split("/")[0];
+            requestData.address_to.city = $("#sltCity").val().split("/")[0];
+            requestData.address_to.ward = $(this).val().split("/")[0];
             requestData.parcel = new Object();
             requestData.parcel.weight = 300;
             if ($('input[name="paymentMethod"]:checked').val() == 'CASH') {
@@ -240,7 +240,9 @@
     },
 
     createOrder: function () {
-
+        var district = $("#sltDistrict").val().split("/");
+        var ward = $("#sltWard").val().split("/");
+        var city = $("#sltCity").val().split("/");
         var order = {
             CustomerName: $('#txtName').val(),
             CustomerAddress: $('#txtAddress').val(),
@@ -250,9 +252,12 @@
             PaymentMethod: $('input[name="paymentMethod"]:checked').val(),
             BankCode: $('input[groupname="bankcode"]:checked').prop('id'),
             Status: false,
-            CustomerAddressDistrict : $("#sltDistrict").val(),
-            CustomerAddressCity : $("#sltCity").val(),
-            CustomerAddressWard : $("#sltWard").val(),
+            CustomerAddressDistrict: district[0],
+            AddressDistrict: district[1],
+            CustomerAddressCity: city[0],
+            AddressCity: city[1],
+            CustomerAddressWard: ward[0],
+            AddressWard: ward[1],
             Weight: 300,
             OrderAmount : parseInt($('#lblTotalOrder').attr("value")),
             CodFee: parseInt($('#lblCodFee').attr("value")),

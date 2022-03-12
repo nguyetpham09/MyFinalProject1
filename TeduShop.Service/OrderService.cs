@@ -16,7 +16,7 @@ namespace TeduShop.Service
         IEnumerable<OrderInformation> GetAllOrderInformation();
         IEnumerable<OrderInformation> GetAllOrderInformationByOrderId(int? orderId);
         OrderInformation GetOrderInformationByOrderId(int orderId);
-        IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId);
+        IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId, int page, int pageSize, out int totalRow);
         Order DeleteOrder(int id);
     }
     public class OrderService : IOrderService
@@ -90,9 +90,9 @@ namespace TeduShop.Service
             return _orderRepository.GetOrderInformationByOrderId(orderId);
         }
 
-        public IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId)
+        public IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId, int page, int pageSize, out int totalRow)
         {
-            return _orderRepository.GetOrdersInformationByUserId(userId);
+            return _orderRepository.GetOrdersInformationByUserId(userId, page, pageSize, out totalRow);
         }
 
         public Order DeleteOrder(int id)

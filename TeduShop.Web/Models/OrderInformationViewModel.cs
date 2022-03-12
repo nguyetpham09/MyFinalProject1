@@ -17,5 +17,11 @@ namespace TeduShop.Web.Models
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string CustomerId { get; set; }
+        public string ProductImage { set; get; }
+        public string AddressDistrict { get; set; }
+        public string AddressWard { get; set; }
+        public string AddressCity { get; set; }
+        public string ShipmentId { get; set; }
+        public string ShipmentStatus { get; set; }
     }
 }
