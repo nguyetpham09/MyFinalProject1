@@ -9,68 +9,34 @@
         <div id="cartContent">
             <h3>Lịch sử mua hàng</h3>
             <table class="table">
-                <tr>
-                    <th>
-                        Mã đơn hàng
-                    </th>
-                    <th>
-                        Người nhận hàng
-                    </th>
-                    <th>
-                        Số điện thoại
-                    </th>
-                    <th>
-                        Địa chỉ nhận hàng
-                    </th>
-                    <th>
-                        Phương thức thanh toán
-                    </th>
-                    <th>
-                        Ngày đặt hàng
-                    </th>
-                    <th>
-                        Tên sản phẩm
-                    </th>
-                    <th>
-                        Số lượng
-                    </th>
-                    <th>
-                        Thành tiền
-                    </th>
-                    <th></th>
-                </tr>
+
 
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OrderId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CustomerName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CustomerPhoneNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CustomerAddress)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PaymentMethod)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProductName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.Quantity)" style="width:50px;" />
+                    </td>
+                    <td>
+
+                        <div class="item-view col-xs-12 mb-3 product-card">
+                            <div class="col-xs-8">
+                                <div class="product-title" style="font-weight:bold; font-size:16px;">@Html.DisplayFor(modelItem => item.ProductName)</div>
+                                <div> <span style="font-weight:bold;">Số lượng: </span>@Html.DisplayFor(modelItem => item.Quantity)</div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div>Mã đơn hàng: @Html.DisplayFor(modelItem => item.OrderId)</div>
+                                <div style="color:coral;">
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <span style="font-weight:bold;">Ngày mua: </span>@Html.DisplayFor(modelItem => item.CreatedDate)
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
                 }
 
             </table>

@@ -145,6 +145,7 @@ namespace TeduShop.Data.Repositories
                 PaymentStatus = x.order.PaymentStatus,
                 Price = x.orderDetail.Price,
                 ProductName = x.p.Name,
+                ProductImage = x.p.Image,
                 Quantity = x.orderDetail.Quantity,
                 Status = x.order.Status,
                 CustomerId = x.order.CustomerId,
@@ -156,7 +157,7 @@ namespace TeduShop.Data.Repositories
                 RateId = x.order.RateId,
                 Weight = x.order.Weight
 
-            });
+            }); ;
 
             return result;
         }
