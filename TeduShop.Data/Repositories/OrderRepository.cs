@@ -57,7 +57,7 @@ namespace TeduShop.Data.Repositories
         {
             var query = from p in DbContext.Products
                         join orderDetail in DbContext.OrderDetails
-                        on p.ID equals orderDetail.OrderID
+                        on p.ID equals orderDetail.ProductID
                         join order in DbContext.Orders
                         on orderDetail.OrderID equals order.ID
                         join customer in DbContext.Users

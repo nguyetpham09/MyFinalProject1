@@ -98,28 +98,42 @@ namespace TeduShop.Web.Api
         public HttpResponseMessage GetAllOrder(HttpRequestMessage request, string keyword, int page, int pageSize = 20)
         {
             return CreateHttpResponse(request, () =>
-            {  
+            {
+                int totalRow = 0;
                 if (!string.IsNullOrEmpty(keyword)) {
                     var orderId = int.Parse(keyword);
+                    var model = _orderService.GetAllOrderInformationByOrderId(orderId);
+                    totalRow = model.Count();
+                    var query = model.OrderByDescending(x => x.CreatedDate).Skip(page * pageSize).Take(pageSize);
+                    var responseData = Mapper.Map<IEnumerable<OrderInformation>, IEnumerable<OrderInformationViewModel>>(query.AsEnumerable());
+
+                    var paginationSet = new PaginationSet<OrderInformationViewModel>()
+                    {
+                        Items = responseData,
+                        Page = page,
+                        TotalCount = totalRow,
+                        TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
+                    };
+                    var response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
+                    return response;
                 }
-                int totalRow = 0;
-            
-                var model = _orderService.GetAllOrderInformation();
-
-                totalRow = model.Count();
-                var query = model.OrderByDescending(x => x.CreatedDate).Skip(page * pageSize).Take(pageSize);
-
-                var responseData = Mapper.Map<IEnumerable<OrderInformation>, IEnumerable<OrderInformationViewModel>>(query.AsEnumerable());
-
-                var paginationSet = new PaginationSet<OrderInformationViewModel>()
+                else
                 {
-                    Items = responseData,
-                    Page = page,
-                    TotalCount = totalRow,
-                    TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
-                };
-                var response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
-                return response;
+                    var model = _orderService.GetAllOrderInformation();
+                    totalRow = model.Count();
+                    var query = model.OrderByDescending(x => x.CreatedDate).Skip(page * pageSize).Take(pageSize);
+                    var responseData = Mapper.Map<IEnumerable<OrderInformation>, IEnumerable<OrderInformationViewModel>>(query.AsEnumerable());
+
+                    var paginationSet = new PaginationSet<OrderInformationViewModel>()
+                    {
+                        Items = responseData,
+                        Page = page,
+                        TotalCount = totalRow,
+                        TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
+                    };
+                    var response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
+                    return response;
+                }
             });
         }
 
@@ -472,6 +486,45 @@ namespace TeduShop.Web.Api
                 }
                 return listProduct;
             }
+        }
+
+        [Route("getbyorderid/{id:int}")]
+        [HttpGet]
+        public HttpResponseMessage GetByOrderId(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                var model = _orderService.GetOrderInformationByOrderId(id);
+
+                var responseData = Mapper.Map<OrderInformation, OrderInformationViewModel>(model);
+
+                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
+
+                return response;
+            });
+        }
+
+        [Route("deleteorder")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteOrder(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    var oldOrder = _orderService.DeleteOrder(id);
+                    _orderService.Save();
+
+                    response = request.CreateResponse(HttpStatusCode.Created);
+                }
+
+                return response;
+            });
         }
     }
 }
