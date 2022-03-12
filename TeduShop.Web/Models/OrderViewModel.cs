@@ -48,7 +48,7 @@ namespace TeduShop.Web.Models
         public string CustomerAddressCity { get; set; }
         public string AddressCity { get; set; }
         public string CustomerAddressWard { get; set; }
-        public string AddresssWard { get; set; }
+        public string AddressWard { get; set; }
         public int Weight { get; set; }
         public string ShipmentId { get; set; }
         public string ShipmentStatus { get; set; }
