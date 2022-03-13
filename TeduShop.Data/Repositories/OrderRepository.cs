@@ -53,7 +53,9 @@ namespace TeduShop.Data.Repositories
                 AddressWard = x.order.AddressWard,
                 AddressDistrict = x.order.AddressDistrict,
                 ShipmentId = x.order.ShipmentId,
-                ShipmentStatus = x.order.ShipmentStatus
+                ShipmentStatus = x.order.ShipmentStatus,
+                TotalPrice = (decimal)(x.orderDetail.Quantity * x.orderDetail.Price),
+                Total = x.order.Total
             });
 
             return result;
@@ -90,7 +92,9 @@ namespace TeduShop.Data.Repositories
                 AddressWard = x.order.AddressWard,
                 AddressDistrict = x.order.AddressDistrict,
                 ShipmentId = x.order.ShipmentId,
-                ShipmentStatus = x.order.ShipmentStatus
+                ShipmentStatus = x.order.ShipmentStatus,
+                TotalPrice = (decimal)(x.orderDetail.Quantity * x.orderDetail.Price),
+                Total = x.order.Total
             });
 
             return result;
@@ -131,6 +135,8 @@ namespace TeduShop.Data.Repositories
                             AddressCity = order.AddressCity,
                             AddressWard = order.AddressWard,
                             AddressDistrict = order.AddressDistrict,
+                            TotalPrice = (decimal)(orderDetail.Quantity * orderDetail.Price),
+                            Total = order.Total
                         };
 
             return query.First();
@@ -174,7 +180,9 @@ namespace TeduShop.Data.Repositories
                 AddressCity = x.order.AddressCity,
                 AddressWard = x.order.AddressWard,
                 AddressDistrict = x.order.AddressDistrict,
-            }); ;
+                TotalPrice = (decimal)(x.orderDetail.Quantity * x.orderDetail.Price),
+                Total = x.order.Total
+            }); 
             totalRow = result.Count();
 
             return result.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);

@@ -32,10 +32,14 @@
                                     <div class="col-xs-4">
                                         <div><span style="font-weight:bold;"> Mã đơn hàng:</span> @Html.DisplayFor(modelItem => item.OrderId)</div>
                                         <div><span style="font-weight:bold;">Mã vận đơn: </span> @Html.DisplayFor(modelItem => item.ShipmentId)</div>
-                                        <div></div>
+                                        <div style="color:coral;">
+                                            <span style="font-weight:bold;"> Giá sản phẩm: </span>
+                                            @Html.DisplayFor(modelItem => item.TotalPrice)
+                                        </div>
+
                                         <div style="color:coral;">
                                             <span style="font-weight:bold;"> Thành tiền: </span>
-                                            @Html.DisplayFor(modelItem => item.Price)
+                                            @Html.DisplayFor(modelItem => item.Total)
                                         </div>
 
                                     </div>

@@ -23,5 +23,7 @@ namespace TeduShop.Web.Models
         public string AddressCity { get; set; }
         public string ShipmentId { get; set; }
         public string ShipmentStatus { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int Total { get; set; }
     }
 }
