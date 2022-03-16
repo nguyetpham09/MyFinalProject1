@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<TeduShop.Web.Models.ProductCategoryViewModel>
+<link href="~/Assets/client/css/style.css" rel="stylesheet" />
 <div class="sub-cate">
     <div class="top-nav rsidebar span_1_of_left">
         <h3 class="cate">Danh mục sản phẩm</h3>
@@ -24,7 +25,7 @@
 
 
                     @if (childCategories.Count() > 0)
-                {
+                    {
                         <ul class="cute">
                             @foreach (var childCategory in childCategories)
                             {
@@ -63,8 +64,8 @@
           });
         </script>*@
     <div class="chain-grid menu-chain">
-        <a href="single.html"><img class="img-responsive chain" src="/Assets/client/images/wat.jpg" alt="" /></a>
-        
+        <a href="single.html"><img class="my-img img-responsive chain" src="/Assets/client/images/wat.jpg" alt="" /></a>
+
     </div>
     <a class="view-all all-product" href="product.html">VIEW ALL PRODUCTS<span> </span></a>
 </div>

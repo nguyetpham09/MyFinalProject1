@@ -35,7 +35,7 @@
             <div class="product-grid">
               <div class="content_box">
                 <a href="@url">
-                  <div class="left-grid-view grid-view-left">
+                  <div class="left-grid-view grid-view-left img-size">
                     <img src="@product.Image" class="img-responsive watch-right" alt="@product.Name" />
                     <div class="mask">
                       <div class="info">Xem nhanh</div>
@@ -45,7 +45,7 @@
               </div>
               <h4><a href="@url">@product.Name</a></h4>
               <p>@product.Description</p>
-              @(product.Price == 0 ? "Liên hệ" : product.Price.ToString("N2"))
+              <span style="color: coral; font-weight: bold;">@(product.Price == 0 ? "Liên hệ" : product.Price.ToString("N2"))</span>
             </div>
         }
         <div class="clearfix"> </div>
