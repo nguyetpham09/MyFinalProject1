@@ -4996,6 +4996,7 @@
     <Content Include="Assets\client\css\bootstrap.css" />
     <Content Include="Assets\client\css\custom.css" />
     <Content Include="Assets\client\css\etalage.css" />
+    <Content Include="Assets\client\css\footer.css" />
     <Content Include="Assets\client\css\form.css" />
     <Content Include="Assets\client\css\style.css" />
     <Content Include="Assets\client\font-awesome-4.6.3\css\font-awesome.css" />

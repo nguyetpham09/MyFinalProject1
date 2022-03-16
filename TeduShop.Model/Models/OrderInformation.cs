@@ -28,5 +28,7 @@ namespace TeduShop.Model.Models
         public string ShipmentId { get; set; }
         public string ShipmentStatus { get; set; }
         public string RateId { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int Total { get; set; }
     }
 }
