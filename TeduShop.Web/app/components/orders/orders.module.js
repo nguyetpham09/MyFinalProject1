@@ -15,7 +15,7 @@
             }).state('order_edit', {
                 url: "/order_edit",
                 parent: 'base',
-                templateUrl: "/app/components/products/orderEditView.html",
+                templateUrl: "/app/components/orders/orderEditView.html",
                 controller: "orderEditController"
             });
     }

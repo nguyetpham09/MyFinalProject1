@@ -445,7 +445,7 @@ h5.latest-product{
 .chain-grid{
 	border: 1px solid #ddd;
 	position: relative;	
-	width: 30.7%;
+	width: 33.33%;
 	margin: 0 3% 0 0;
 	padding:0;
 }
@@ -453,15 +453,17 @@ h5.latest-product{
 	width:100%;
 	margin: 2em 0;
 }
-.sed-left-top,.grid-top-chain{
+.sed-left-top, .grid-top-chain {
 	margin: 0;
+	height: 450px;
 }
 .star-price {
 	padding: 1em 0.5em;
 }
-.chain{
+.chain {
 	margin: 0 auto;
 	padding: 3em 0;
+	height: 300px;
 }
 .chain-grid span.star{
 	background: url(../images/img-sprite.png)-208px -14px;
@@ -573,20 +575,20 @@ p.m_text {
 }
 .nbs-flexisel-item {
 	float: left;
-	margin:0px;
-	padding:0px;
+	margin: 0px;
+	padding: 0px;
 	cursor: pointer;
 	position: relative;
 	line-height: 0px;
 }
-.nbs-flexisel-item > img {
-	cursor: pointer;
-	position: relative;
-	margin-top:10px;
-	margin-bottom: 10px;
-	max-width:150px;
-	max-height:500px;
-}
+	.nbs-flexisel-item > img {
+		cursor: pointer;
+		position: relative;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		width: 150px;
+		height: 200px;
+	}
 .grid-flex{
 	margin:10px 0 20px 0;
 }
@@ -672,6 +674,8 @@ p.m_text {
 .grid-product{
 	display:block;
 	margin: 2% 0;
+	width: 100%;
+	height: 300px;
 }
 .product-grid h4 {
 	font-size:16px;
@@ -692,7 +696,7 @@ p.m_text {
 }
 .product-grid {
 	float: left;
-	width: 22.333%;
+	width: 22%;
 	margin: 10px;
 }
 .left-grid-view {
@@ -707,12 +711,14 @@ p.m_text {
 	left: 163px;
 }
 .grid-view-left img {
-   -webkit-transition: all 0.3s ease-in-out;
-   -moz-transition: all 0.3s ease-in-out;
-   -o-transition: all 0.3s ease-in-out;
-   -ms-transition: all 0.3s ease-in-out;
-   transition: all 0.3s ease-in-out;
-   margin: 0 auto;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	margin: 0 auto;
+	width: 180px;
+	height: 260px;
 }
 .grid-view-left .mask {
   -webkit-transform: translateX(-300px);
@@ -1727,12 +1733,16 @@ img.banner-bag {
 	font-weight:bold;
 
 }
-	.product-card {
+.product-card {
 		background-color: white;
 		display: inline-block;
-	}
+}
 .total{
 	color:coral;
+}
+.img-size {
+		width: 180px;
+		height: 260px;
 }
 /*.content_box{
 	margin: 300px;

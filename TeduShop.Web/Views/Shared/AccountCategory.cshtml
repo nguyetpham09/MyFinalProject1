@@ -1,18 +1,20 @@
 ﻿@using Microsoft.AspNet.Identity;
-@{ 
+@{
     ViewBag.Title = "Cá nhân";
-} 
+}
+<link href="~/Assets/client/css/style.css" rel="stylesheet" />
+
 <div class="sub-cate">
     <div class="top-nav rsidebar span_1_of_left">
         <h3 class="cate">CÁ NHÂN</h3>
         @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @id = "frmLogout" }))
         {
-            if(Request.IsAuthenticated)
+            if (Request.IsAuthenticated)
             {
                 var userDetailUrl = "/thong-tin-ca-nhan-" + User.Identity.GetUserId() + ".html";
                 var orderHistoryUrl = "/lich-su-mua-hang-" + User.Identity.GetUserId() + ".html";
                 <ul class="menu">
-                    
+
                     <li class="subitem3"><a href="@userDetailUrl">THÔNG TIN CÁ NHÂN</a></li>
 
                     <li class="subitem3"><a href="@orderHistoryUrl">LỊCH SỬ MUA HÀNG</a></li>
@@ -44,7 +46,7 @@
           });
         </script>*@
     <div class="chain-grid menu-chain">
-        <a href="single.html"><img class="img-responsive chain" src="/Assets/client/images/wat.jpg" alt="" /></a>
+        <a href="single.html"><img class="my-img img-responsive chain" src="/Assets/client/images/wat.jpg" alt="" /></a>
 
     </div>
 </div>

@@ -148,7 +148,9 @@ namespace TeduShop.Web.Infrastructure.Extensions
             order.OrderAmount = orderVm.OrderAmount;
             order.CodFee = orderVm.CodFee;
             order.Total = orderVm.Total;
-
+            order.AddressCity = orderVm.AddressCity;
+            order.AddressDistrict = orderVm.AddressDistrict;
+            order.AddressWard = orderVm.AddressWard;
         }
 
         public static void UpdateApplicationGroup(this ApplicationGroup appGroup, ApplicationGroupViewModel appGroupViewModel)

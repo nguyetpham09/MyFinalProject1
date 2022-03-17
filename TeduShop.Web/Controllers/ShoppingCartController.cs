@@ -178,7 +178,7 @@ namespace TeduShop.Web.Controllers
                 else
                 {
                     
-                    string orderInfo = "Thanh toán đon hàng tại LovebookShop";
+                    string orderInfo = "Thanh toán đon hàng tại BigShope";
 
 
                     string amount = orderNew.Total.ToString();//orderDetails.Sum(x => x.Quantity * x.Price).ToString().Split('.').First();

@@ -15,7 +15,7 @@ namespace TeduShop.Data.Repositories
         IEnumerable<OrderInformation> GetAllOrderInformationByKeyword(int? orderId);
         OrderInformation GetOrderInformationByOrderId(int orderId);
         IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(string fromDate, string toDate);
-        IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId);
+        IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId, int page, int pageSize, out int totalRow);
     }
 
     public class OrderRepository : RepositoryBase<Order>, IOrderRepository
@@ -47,7 +47,15 @@ namespace TeduShop.Data.Repositories
                 ProductName = x.p.Name,
                 Quantity = x.orderDetail.Quantity,
                 Status = x.order.Status,
-                CustomerId = x.order.CustomerId
+                CustomerId = x.order.CustomerId,
+                ProductImage = x.p.Image,
+                AddressCity = x.order.AddressCity,
+                AddressWard = x.order.AddressWard,
+                AddressDistrict = x.order.AddressDistrict,
+                ShipmentId = x.order.ShipmentId,
+                ShipmentStatus = x.order.ShipmentStatus,
+                TotalPrice = (decimal)(x.orderDetail.Quantity * x.orderDetail.Price),
+                Total = x.order.Total
             });
 
             return result;
@@ -57,7 +65,7 @@ namespace TeduShop.Data.Repositories
         {
             var query = from p in DbContext.Products
                         join orderDetail in DbContext.OrderDetails
-                        on p.ID equals orderDetail.OrderID
+                        on p.ID equals orderDetail.ProductID
                         join order in DbContext.Orders
                         on orderDetail.OrderID equals order.ID
                         join customer in DbContext.Users
@@ -78,7 +86,15 @@ namespace TeduShop.Data.Repositories
                 ProductName = x.p.Name,
                 Quantity = x.orderDetail.Quantity,
                 Status = x.order.Status,
-                CustomerId = x.order.CustomerId
+                CustomerId = x.order.CustomerId,
+                ProductImage = x.p.Image,
+                AddressCity = x.order.AddressCity,
+                AddressWard = x.order.AddressWard,
+                AddressDistrict = x.order.AddressDistrict,
+                ShipmentId = x.order.ShipmentId,
+                ShipmentStatus = x.order.ShipmentStatus,
+                TotalPrice = (decimal)(x.orderDetail.Quantity * x.orderDetail.Price),
+                Total = x.order.Total
             });
 
             return result;
@@ -114,14 +130,19 @@ namespace TeduShop.Data.Repositories
                             ShipmentId = order.ShipmentId,
                             ShipmentStatus = order.ShipmentStatus,
                             RateId = order.RateId,
-                            Weight = order.Weight
-
+                            Weight = order.Weight,
+                            ProductImage = p.Image,
+                            AddressCity = order.AddressCity,
+                            AddressWard = order.AddressWard,
+                            AddressDistrict = order.AddressDistrict,
+                            TotalPrice = (decimal)(orderDetail.Quantity * orderDetail.Price),
+                            Total = order.Total
                         };
 
             return query.First();
         }
 
-        public IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId)
+        public IEnumerable<OrderInformation> GetOrdersInformationByUserId(string userId, int page, int pageSize, out int totalRow)
         {
             var query = from p in DbContext.Products
                         join orderDetail in DbContext.OrderDetails
@@ -155,11 +176,16 @@ namespace TeduShop.Data.Repositories
                 ShipmentId = x.order.ShipmentId,
                 ShipmentStatus = x.order.ShipmentStatus,
                 RateId = x.order.RateId,
-                Weight = x.order.Weight
+                Weight = x.order.Weight,
+                AddressCity = x.order.AddressCity,
+                AddressWard = x.order.AddressWard,
+                AddressDistrict = x.order.AddressDistrict,
+                TotalPrice = (decimal)(x.orderDetail.Quantity * x.orderDetail.Price),
+                Total = x.order.Total
+            }); 
+            totalRow = result.Count();
 
-            }); ;
-
-            return result;
+            return result.OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(string fromDate, string toDate)
