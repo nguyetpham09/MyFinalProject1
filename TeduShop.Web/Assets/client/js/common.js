@@ -42,10 +42,12 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status) {
-                        alert('Thêm sản phẩm thành công.');
+                        //alert('Thêm sản phẩm thành công.');
+                        swal("Thông báo", "Thêm sản phẩm thành công.", "success");
                     }
                     else {
-                        alert(response.message);
+                        //alert(response.message);
+                        swal("Lỗi", response.message, "error");
                     }
                 }
             });

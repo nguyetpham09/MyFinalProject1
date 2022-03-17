@@ -265,7 +265,8 @@
             RateId: $('input:radio[name="selectedService"]:checked').attr("rate_id")
         }
         if (order.RateId == undefined || order.RateId == "") {
-            alert("Vui lòng chọn dịch vụ vận chuyển");
+            //alert("Vui lòng chọn dịch vụ vận chuyển");
+            swal("Lỗi", "Vui lòng chọn dịch vụ vận chuyển", "error");
             return;
         }
         $.ajax({
