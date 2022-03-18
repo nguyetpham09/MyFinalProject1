@@ -1,6 +1,7 @@
 ﻿var common = {
     init: function () {
         common.registerEvents();
+        isLoggedIn = this.isLogin();
     },
     registerEvents: function () {
         $("#txtKeyword").autocomplete({
@@ -41,14 +42,15 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status) {
+                    if (response.status && common.isLoggedIn) {
                         //alert('Thêm sản phẩm thành công.');
                         swal("Thông báo", "Thêm sản phẩm thành công.", "success");
-                    }
-                    else {
-                        //alert(response.message);
+                    } else if (!common.isLoggedIn) {
+                        swal("Lỗi", "Vui lòng đăng nhập để mua hàng", "error");
+                    } else {
                         swal("Lỗi", response.message, "error");
                     }
+                    
                 }
             });
         });
@@ -56,6 +58,22 @@
             e.preventDefault();
             $('#frmLogout').submit();
         });
-    }
+    },
+
+    isLogin: function () {
+        $.ajax({
+            url: '/ShoppingCart/GetUser',
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.status) {
+                    isLoggedIn = true;
+                }
+                else {
+                    isLoggedIn = false;
+                }
+            }
+        });
+    },
 }
 common.init();

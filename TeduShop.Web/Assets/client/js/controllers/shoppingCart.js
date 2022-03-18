@@ -4,6 +4,7 @@
         cart.loadData();
         cart.registerEvent();
         rates = [];
+        isLoggedIn = this.isLogin();
     },
     registerEvent: function () {
         $('#frmPayment').validate({
@@ -67,7 +68,13 @@
         });
         $('#btnCheckout').off('click').on('click', function (e) {
             e.preventDefault();
-            $('#divCheckout').show();
+            if (cart.isLoggedIn) {
+                $('#divCheckout').show();
+            }
+            else {
+                swal("Lỗi", "Vui lòng đăng nhập để thực hiện thanh toán", "error");
+            }
+            
         });
         $('#chkUserLoginInfo').off('click').on('click', function () {
             if ($(this).prop('checked'))
@@ -222,6 +229,23 @@
     initRadioEvent: function() {
         
     },
+
+    isLogin: function () {
+        $.ajax({
+            url: '/ShoppingCart/GetUser',
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.status) {
+                    isLoggedIn = true;
+                }
+                else {
+                    isLoggedIn = false;
+                }
+            }
+        });
+    },
+
     getLoginUser: function () {
         $.ajax({
             url: '/ShoppingCart/GetUser',
