@@ -42,7 +42,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status && common.isLoggedIn) {
+                    if (response.status && common.getLoginStatus()) {
                         //alert('Thêm sản phẩm thành công.');
                         swal("Thông báo", "Thêm sản phẩm thành công.", "success");
                     } else if (!common.isLoggedIn) {
@@ -59,7 +59,9 @@
             $('#frmLogout').submit();
         });
     },
-
+    getLoginStatus: function () {
+        return isLoggedIn;
+    },
     isLogin: function () {
         $.ajax({
             url: '/ShoppingCart/GetUser',
